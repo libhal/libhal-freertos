@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/Users/kammce/git/libhal/libhal-freertos/demos/build/lpc4078/Debug",
+  "command": "/Users/kammce/.conan2/p/b/arm-g82b0b8127b407/p/bin/bin/arm-none-eabi-g++  -isystem /Users/kammce/.conan2/p/b/libha876f45c6858d9/p/include -isystem /Users/kammce/.conan2/p/b/freer980792c11c312/p/include -isystem /Users/kammce/.conan2/p/libhab19888bdee506/p/include -isystem /Users/kammce/.conan2/p/libha9f6bbcc3d7ca9/p/include -isystem /Users/kammce/.conan2/p/tl-fu31454aa876889/p/include -isystem /Users/kammce/.conan2/p/minim95193b2a8e64e/p/include -isystem /Users/kammce/.conan2/p/b/libha9e5ee03e00501/p/include -isystem /Users/kammce/.conan2/p/b/libhaa1ff562eb907f/p/include -isystem /Users/kammce/.conan2/p/libha5d6804b4874ac/p/include -isystem /Users/kammce/.conan2/p/ring-705d0076cd6fe/p/include -mcpu=cortex-m4 -mfloat-abi=hard -Og -g -std=c++23 -g -Werror -Wall -Wextra -Wshadow -fexceptions -fno-rtti -o CMakeFiles/startup_code.dir/main.cpp.obj -c /Users/kammce/git/libhal/libhal-freertos/demos/main.cpp",
+  "file": "/Users/kammce/git/libhal/libhal-freertos/demos/main.cpp",
+  "output": "CMakeFiles/startup_code.dir/main.cpp.obj"
+},
+{
+  "directory": "/Users/kammce/git/libhal/libhal-freertos/demos/build/lpc4078/Debug",
+  "command": "/Users/kammce/.conan2/p/b/arm-g82b0b8127b407/p/bin/bin/arm-none-eabi-g++  -isystem /Users/kammce/.conan2/p/b/libha876f45c6858d9/p/include -isystem /Users/kammce/.conan2/p/b/freer980792c11c312/p/include -isystem /Users/kammce/.conan2/p/libhab19888bdee506/p/include -isystem /Users/kammce/.conan2/p/libha9f6bbcc3d7ca9/p/include -isystem /Users/kammce/.conan2/p/tl-fu31454aa876889/p/include -isystem /Users/kammce/.conan2/p/minim95193b2a8e64e/p/include -isystem /Users/kammce/.conan2/p/b/libha9e5ee03e00501/p/include -isystem /Users/kammce/.conan2/p/b/libhaa1ff562eb907f/p/include -isystem /Users/kammce/.conan2/p/libha5d6804b4874ac/p/include -isystem /Users/kammce/.conan2/p/ring-705d0076cd6fe/p/include -mcpu=cortex-m4 -mfloat-abi=hard -Og -g -std=c++23 -g -Werror -Wall -Wextra -Wshadow -fexceptions -fno-rtti -o CMakeFiles/startup_code.dir/platforms/lpc4078.cpp.obj -c /Users/kammce/git/libhal/libhal-freertos/demos/platforms/lpc4078.cpp",
+  "file": "/Users/kammce/git/libhal/libhal-freertos/demos/platforms/lpc4078.cpp",
+  "output": "CMakeFiles/startup_code.dir/platforms/lpc4078.cpp.obj"
+},
+{
+  "directory": "/Users/kammce/git/libhal/libhal-freertos/demos/build/lpc4078/Debug",
+  "command": "/Users/kammce/.conan2/p/b/arm-g82b0b8127b407/p/bin/bin/arm-none-eabi-g++  -isystem /Users/kammce/.conan2/p/b/libha876f45c6858d9/p/include -isystem /Users/kammce/.conan2/p/b/freer980792c11c312/p/include -isystem /Users/kammce/.conan2/p/libhab19888bdee506/p/include -isystem /Users/kammce/.conan2/p/libha9f6bbcc3d7ca9/p/include -isystem /Users/kammce/.conan2/p/tl-fu31454aa876889/p/include -isystem /Users/kammce/.conan2/p/minim95193b2a8e64e/p/include -isystem /Users/kammce/.conan2/p/b/libha9e5ee03e00501/p/include -isystem /Users/kammce/.conan2/p/b/libhaa1ff562eb907f/p/include -isystem /Users/kammce/.conan2/p/libha5d6804b4874ac/p/include -isystem /Users/kammce/.conan2/p/ring-705d0076cd6fe/p/include -mcpu=cortex-m4 -mfloat-abi=hard -Og -g -std=c++23 -g -Werror -Wall -Wextra -Wshadow -fexceptions -fno-rtti -o CMakeFiles/freertos.elf.dir/applications/freertos.cpp.obj -c /Users/kammce/git/libhal/libhal-freertos/demos/applications/freertos.cpp",
+  "file": "/Users/kammce/git/libhal/libhal-freertos/demos/applications/freertos.cpp",
+  "output": "CMakeFiles/freertos.elf.dir/applications/freertos.cpp.obj"
+},
+{
+  "directory": "/Users/kammce/git/libhal/libhal-freertos/demos/build/lpc4078/Debug",
+  "command": "/Users/kammce/.conan2/p/b/arm-g82b0b8127b407/p/bin/bin/arm-none-eabi-g++  -isystem /Users/kammce/.conan2/p/b/libha876f45c6858d9/p/include -isystem /Users/kammce/.conan2/p/b/freer980792c11c312/p/include -isystem /Users/kammce/.conan2/p/libhab19888bdee506/p/include -isystem /Users/kammce/.conan2/p/libha9f6bbcc3d7ca9/p/include -isystem /Users/kammce/.conan2/p/tl-fu31454aa876889/p/include -isystem /Users/kammce/.conan2/p/minim95193b2a8e64e/p/include -isystem /Users/kammce/.conan2/p/b/libha9e5ee03e00501/p/include -isystem /Users/kammce/.conan2/p/b/libhaa1ff562eb907f/p/include -isystem /Users/kammce/.conan2/p/libha5d6804b4874ac/p/include -isystem /Users/kammce/.conan2/p/ring-705d0076cd6fe/p/include -mcpu=cortex-m4 -mfloat-abi=hard -Og -g -std=c++23 -g -Werror -Wall -Wextra -Wshadow -fexceptions -fno-rtti -o CMakeFiles/music_player.elf.dir/applications/music_player.cpp.obj -c /Users/kammce/git/libhal/libhal-freertos/demos/applications/music_player.cpp",
+  "file": "/Users/kammce/git/libhal/libhal-freertos/demos/applications/music_player.cpp",
+  "output": "CMakeFiles/music_player.elf.dir/applications/music_player.cpp.obj"
+},
+{
+  "directory": "/Users/kammce/git/libhal/libhal-freertos/demos/build/lpc4078/Debug",
+  "command": "/Users/kammce/.conan2/p/b/arm-g82b0b8127b407/p/bin/bin/arm-none-eabi-g++  -isystem /Users/kammce/.conan2/p/b/libha876f45c6858d9/p/include -isystem /Users/kammce/.conan2/p/b/freer980792c11c312/p/include -isystem /Users/kammce/.conan2/p/libhab19888bdee506/p/include -isystem /Users/kammce/.conan2/p/libha9f6bbcc3d7ca9/p/include -isystem /Users/kammce/.conan2/p/tl-fu31454aa876889/p/include -isystem /Users/kammce/.conan2/p/minim95193b2a8e64e/p/include -isystem /Users/kammce/.conan2/p/b/libha9e5ee03e00501/p/include -isystem /Users/kammce/.conan2/p/b/libhaa1ff562eb907f/p/include -isystem /Users/kammce/.conan2/p/libha5d6804b4874ac/p/include -isystem /Users/kammce/.conan2/p/ring-705d0076cd6fe/p/include -mcpu=cortex-m4 -mfloat-abi=hard -Og -g -std=c++23 -g -Werror -Wall -Wextra -Wshadow -fexceptions -fno-rtti -ftls-model=local-exec -o CMakeFiles/task.elf.dir/applications/task.cpp.obj -c /Users/kammce/git/libhal/libhal-freertos/demos/applications/task.cpp",
+  "file": "/Users/kammce/git/libhal/libhal-freertos/demos/applications/task.cpp",
+  "output": "CMakeFiles/task.elf.dir/applications/task.cpp.obj"
+}
+]
