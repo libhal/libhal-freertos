@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC
+// Copyright 2024 - 2025 Khalil Estell and the libhal contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,43 +15,31 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-#include "hardware_map.hpp"
-#include <libhal-util/steady_clock.hpp>
+#include <libhal/error.hpp>
+
+#include "resource_list.hpp"
+
+resource_list resources;
 
 int main()
 {
-  using namespace std::literals;
-
-  auto processor_status = initialize_processor();
-
-  if (!processor_status) {
-    hal::halt();
-  }
-
-  auto platform_status = initialize_platform();
-
-  if (!platform_status) {
-    hal::halt();
-  }
-
-  static auto hardware_map = platform_status.value();
-  auto is_finished = application(hardware_map);
-
-  if (!is_finished) {
-    hardware_map.reset();
-  } else {
+  try {
+    initialize_platform(resources);
+    application(resources);
+  } catch (...) {
     hal::halt();
   }
 
   return 0;
 }
 
-namespace boost {
-void throw_exception([[maybe_unused]] std::exception const& e)
+extern "C"
 {
-  hal::halt();
+  // This gets rid of an issue with libhal-exceptions in Debug mode.
+  void __assert_func()
+  {
+  }
 }
-}  // namespace boost
 
 extern "C"
 {

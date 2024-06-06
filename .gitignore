@@ -40,6 +40,22 @@ archives/
 
 # Artifacts
 build/
+tools/
+
+# lint artifacts
+compile_commands.json
+.cache/
+
+# OS files
+.DS_Store
+
+# Conan Files
+graph_info.json
+conaninfo.txt
+conan.lock
+conanbuildinfo.txt
+
+# CMake
 CMakeUserPresets.json
 
 # Artifacts
