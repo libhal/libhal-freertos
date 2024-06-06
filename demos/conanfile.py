@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2024 Khalil Estell
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,36 +13,17 @@
 # limitations under the License.
 
 from conan import ConanFile
-from conan.tools.cmake import CMake, cmake_layout
 
 
 class demos(ConanFile):
-    settings = "compiler", "build_type", "os", "arch"
-    generators = "CMakeToolchain", "CMakeDeps", "VirtualBuildEnv"
-    options = {"platform": ["ANY"]}
-    default_options = {"platform": "unspecified"}
-
-    def build_requirements(self):
-        self.tool_requires("cmake/3.27.1")
-        self.tool_requires("libhal-cmake-util/1.0.0")
+    python_requires = "libhal-bootstrap/[^2.0.0]"
+    python_requires_extend = "libhal-bootstrap.demo"
 
     def requirements(self):
-        if str(self.options.platform).startswith("stm32f1"):
-            self.requires("libhal-armcortex/[^2.1.0]")
-            self.requires("libhal-stm32f1/[^2.0.3]")
-        if str(self.options.platform).startswith("lpc40"):
-            self.requires("libhal-armcortex/[^2.1.0]")
-            self.requires("libhal-lpc40/[^2.1.1]")
+        bootstrap = self.python_requires["libhal-bootstrap"]
+        bootstrap.module.add_demo_requirements(self)
+
         self.requires("libhal-freertos/10.6.0", options={
             "configUSE_IDLE_HOOK": True
         })
-        self.requires("libhal-util/[^3.0.0]")
-
-    def layout(self):
-        platform_directory = "build/" + str(self.options.platform)
-        cmake_layout(self, build_folder=platform_directory)
-
-    def build(self):
-        cmake = CMake(self)
-        cmake.configure()
-        cmake.build()
+        self.requires("minimp3/cci.20211201")

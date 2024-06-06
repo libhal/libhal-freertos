@@ -38,5 +38,5 @@ list(APPEND freertos_includes
 
 # Save the result of the generator
 file(GENERATE
-  OUTPUT "include.list"
-  CONTENT "${freertos_includes}")
+     OUTPUT "include.list"
+     CONTENT "${freertos_includes}")

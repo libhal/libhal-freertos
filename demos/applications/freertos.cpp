@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC
+// Copyright 2024 Khalil Estell
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ std::array<StackType_t, 64> stack;
 
 void blinker(void* p_hardware_map)
 {
-  auto& hardware = *reinterpret_cast<hardware_map*>(p_hardware_map);
+  auto& hardware = *reinterpret_cast<hardware_map_t*>(p_hardware_map);
 
   while (true) {
     (void)hardware.led->level(true);
@@ -38,7 +38,7 @@ TaskHandle_t xHandle = NULL;
 /* Structure that will hold the TCB of the task being created. */
 StaticTask_t xTaskBuffer;
 
-hal::status application(hardware_map& p_map)
+void application(hardware_map_t& p_map)
 {
   using namespace std::chrono_literals;
   using namespace hal::literals;
@@ -56,6 +56,4 @@ hal::status application(hardware_map& p_map)
   /* Start the RTOS scheduler, this function should not return as it causes the
   execution context to change from main() to one of the created tasks. */
   vTaskStartScheduler();
-
-  return hal::success();
 }

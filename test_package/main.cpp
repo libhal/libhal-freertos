@@ -112,4 +112,12 @@ extern "C"
     configTIMER_TASK_STACK_DEPTH is specified in words, not bytes. */
     *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
   }
+
+  unsigned int _freertos_get_high_resolution_timer_count(void)
+  {
+    return 0;
+  }
+  void _freertos_configure_high_resolution_timer(void)
+  {
+  }
 }

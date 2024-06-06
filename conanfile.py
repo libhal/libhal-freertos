@@ -56,6 +56,12 @@ hard_coded_freertos_config = """
 #define INCLUDE_xTaskGetHandle                  1
 #define INCLUDE_xTaskResumeFromISR              1
 
+extern void _freertos_configure_high_resolution_timer(void);
+extern unsigned int _freertos_get_high_resolution_timer_count(void);
+
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() _freertos_configure_high_resolution_timer()
+#define portGET_RUN_TIME_COUNTER_VALUE() _freertos_get_high_resolution_timer_count()
+
 #define configCPU_CLOCK_HZ 12000000
 #define configTICK_RATE_HZ ((TickType_t)1000)
 
@@ -76,8 +82,8 @@ class libhal_freertos(ConanFile):
     license = "MIT"
     homepage = "https://www.freertos.org/"
     description = ("libhal compatible freertos package")
-    topics = ("freertos", "rtos", "threads",
-              "multithreading", "mulitthread", "threaded")
+    topics = ("freertos", "rtos", "threads", "thread",
+              "multithreading", "multi-tasking")
     settings = "os", "arch", 'compiler', 'build_type'
     generators = "CMakeDeps", "CMakeToolchain", "VirtualBuildEnv"
     exports_sources = "CMakeLists.txt"
@@ -147,14 +153,14 @@ class libhal_freertos(ConanFile):
         "configUSE_PORT_OPTIMISED_TASK_SELECTION": False,
         "configUSE_TICKLESS_IDLE": False,
         "configMAX_PRIORITIES": 5,
-        "configMINIMAL_STACK_SIZE": 128,
+        "configMINIMAL_STACK_SIZE": 64,
         "configMAX_TASK_NAME_LEN": 16,
         "configUSE_16_BIT_TICKS": False,
         "configUSE_TASK_NOTIFICATIONS": True,
         "configTASK_NOTIFICATION_ARRAY_ENTRIES": 3,
         "configQUEUE_REGISTRY_SIZE": 10,
         "configUSE_NEWLIB_REENTRANT": False,
-        "configNUM_THREAD_LOCAL_STORAGE_POINTERS": 16,
+        "configNUM_THREAD_LOCAL_STORAGE_POINTERS": 1,
         "configSTACK_DEPTH_TYPE": "uint32_t",
         "configMESSAGE_BUFFER_LENGTH_TYPE": "size_t",
         "configHEAP_CLEAR_MEMORY_ON_FREE": True,
@@ -171,8 +177,8 @@ class libhal_freertos(ConanFile):
         "configUSE_DAEMON_TASK_STARTUP_HOOK": False,
 
         # Run time and task stats gathering related definitions.
-        "configGENERATE_RUN_TIME_STATS": False,
-        "configUSE_TRACE_FACILITY": False,
+        "configGENERATE_RUN_TIME_STATS": True,
+        "configUSE_TRACE_FACILITY": True,
 
         # Co-routine related definitions.
         "configMAX_CO_ROUTINE_PRIORITIES": 3,
@@ -197,26 +203,25 @@ class libhal_freertos(ConanFile):
         "secureconfigMAX_SECURE_CONTEXTS": 8,
     }
 
-    def arm_cortex_port(self, processor: str, float_abi: str):
+    def arm_cortex_port(self, processor: str):
+        # use starts with to include "m0+"
         if processor.startswith("cortex-m0"):
             return "GCC_ARM_CM0"
         elif processor == "cortex-m3":
             return "GCC_ARM_CM3"
-        elif processor == "cortex-m4" and float_abi == "soft":
+        elif processor == "cortex-m4":
             return "GCC_ARM_CM3"  # Use CM3's implementation for CM4 without FPU
-        elif processor == "cortex-m4" and float_abi == "hard":
+        elif processor == "cortex-m4f":
             return "GCC_ARM_CM4F"
         else:  # Add additional ports here!
             raise ConanInvalidConfiguration(
-                f"The processor '{processor}' and float abi '{float_abi}' is " "not supported!")
+                f"The processor '{processor}' is not supported!")
 
     @property
     def freertos_port(self):
         architecture = str(self.settings.arch)
-        if architecture.startswith("thumbv"):
-            processor_name = str(self.settings.arch.processor)
-            float_abi = self.settings.arch.get_safe('float_abi', 'soft')
-            return self.arm_cortex_port(processor_name, float_abi)
+        if architecture.startswith("cortex"):
+            return self.arm_cortex_port(architecture)
         else:
             raise ConanInvalidConfiguration(
                 f"The architecture '{architecture}' is not supported!")

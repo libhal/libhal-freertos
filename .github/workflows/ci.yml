@@ -93,10 +93,10 @@ jobs:
       - name: Install processor profiles
         run: conan config install -tf profiles -sf conan/profiles/ https://github.com/libhal/libhal-armcortex.git
 
-      - name: Install platform profiles
+      - name: Install "libhal-lpc40" platform profiles
         run: conan config install -tf profiles -sf conan/profiles/ https://github.com/libhal/libhal-lpc40.git
 
-      - name: Install platform profiles
+      - name: Install "libhal-lpc40" platform profiles
         run: conan config install -tf profiles -sf conan/profiles/ https://github.com/libhal/libhal-stm32f1.git
 
       - name: 📦 Create `MinSizeRel` package for lpc4078
