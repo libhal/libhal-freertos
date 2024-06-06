@@ -1,4 +1,4 @@
-// Copyright 2024 Khalil Estell
+// Copyright 2024 - 2025 Khalil Estell and the libhal contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,6 +14,9 @@
 
 #include <FreeRTOS.h>
 #include <task.h>
+
+#include <libhal-freertos/io_waiter.hpp>
+#include <libhal-freertos/task.hpp>
 
 constexpr size_t stack_size = 500;
 /* Structure that will hold the TCB of the task being created. */
@@ -38,10 +41,8 @@ void vTaskCode(void* pvParameters)
 
 int main()
 {
-  TaskHandle_t xHandle = NULL;
-
   /* Create the task without using any dynamic memory allocation. */
-  xHandle = xTaskCreateStatic(
+  xTaskCreateStatic(
     vTaskCode,        /* Function that implements the task. */
     "NAME",           /* Text name for the task. */
     stack_size,       /* Number of indexes in the xStack array. */
@@ -111,5 +112,21 @@ extern "C"
     Note that, as the array is necessarily of type StackType_t,
     configTIMER_TASK_STACK_DEPTH is specified in words, not bytes. */
     *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
+  }
+
+  unsigned int _freertos_get_high_resolution_timer_count(void)
+  {
+    return 0;
+  }
+
+  void _freertos_configure_high_resolution_timer(void)
+  {
+  }
+
+  void vApplicationIdleHook()
+  {
+    while (true) {
+      continue;
+    }
   }
 }

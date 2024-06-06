@@ -1,4 +1,4 @@
-# Copyright 2024 Khalil Estell
+# Copyright 2024 - 2025 Khalil Estell and the libhal contributors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,32 +11,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 cmake_minimum_required(VERSION 3.15)
 
-project(libhal-freertos VERSION 10.5.1 LANGUAGES C)
+project(libhal-freertos LANGUAGES CXX)
 
-add_library(freertos_config INTERFACE)
-target_include_directories(freertos_config SYSTEM INTERFACE include)
-target_compile_definitions(freertos_config PUBLIC INTERFACE projCOVERAGE_TEST=0)
+libhal_test_and_make_library(
+  LIBRARY_NAME libhal-freertos
 
-add_subdirectory("third_party")
+  SOURCES
+  src/io_waiter.cpp
+  src/task.cpp
+  src/tls_support.cpp
 
-install(TARGETS freertos_kernel)
-install(TARGETS freertos_kernel_port)
+  PACKAGES
+  freertos
 
-# Get the directories in the include list which are almost entirely generator
-# expressions for "freertos_kernel_port"
-get_target_property(freertos_kernel_includes freertos_kernel
-  INCLUDE_DIRECTORIES)
-get_target_property(freertos_kernel_port_includes freertos_kernel_port
-  INCLUDE_DIRECTORIES)
-
-list(APPEND freertos_includes
-  ${freertos_kernel_includes}
-  ${freertos_kernel_port_includes})
-
-# Save the result of the generator
-file(GENERATE
-  OUTPUT "include.list"
-  CONTENT "${freertos_includes}")
+  LINK_LIBRARIES
+  freertos
+)

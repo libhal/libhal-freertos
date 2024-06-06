@@ -15,43 +15,54 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
+#include <libhal-freertos/task.hpp>
 #include <libhal-util/serial.hpp>
 #include <libhal-util/steady_clock.hpp>
 
 #include "../resource_list.hpp"
 
-std::array<StackType_t, 64> stack;
+resource_list map;
 
-void blinker(void* p_hardware_map) noexcept
-{
-  auto& hardware = *reinterpret_cast<resource_list*>(p_hardware_map);
-
-  while (true) {
-    (*hardware.led)->level(true);
-    vTaskDelay(500);
-    (*hardware.led)->level(false);
-    vTaskDelay(500);
-  }
-}
-
-TaskHandle_t xHandle = NULL;
-/* Structure that will hold the TCB of the task being created. */
-StaticTask_t xTaskBuffer;
+thread_local int a = 15;
+thread_local std::uint8_t b;
+int global = 0;
 
 void application(resource_list& p_map)
 {
   using namespace std::chrono_literals;
   using namespace hal::literals;
 
+  map = p_map;
+
+  static std::array<hal::byte, 512> task1_stack;
   /* Create the task without using any dynamic memory allocation. */
-  xHandle = xTaskCreateStatic(
-    blinker,       /* Function that implements the task. */
-    "blinker",     /* Text name for the task. */
-    stack.size(),  /* Number of indexes in the xStack array. */
-    &p_map,        /* Parameter passed into the task. */
-    4,             /* Priority at which the task is created. */
-    stack.data(),  /* Array to use as the task's stack. */
-    &xTaskBuffer); /* Variable to hold the task's data structure. */
+  static hal::freertos::static_task task1(
+    "blinker",
+    [](void*) noexcept {
+      while (true) {
+        a++;
+        (*map.led)->level(true);
+        vTaskDelay(500);
+        b++;
+        (*map.led)->level(false);
+        vTaskDelay(500);
+      }
+    },
+    task1_stack);
+
+  static std::array<hal::byte, 512> task2_stack;
+  /* Create the task without using any dynamic memory allocation. */
+  static hal::freertos::static_task task2(
+    "iterator",
+    [](void*) noexcept {
+      while (true) {
+        a++;
+        vTaskDelay(500);
+        b++;
+        global++;
+      }
+    },
+    task2_stack);
 
   /* Start the RTOS scheduler, this function should not return as it causes the
   execution context to change from main() to one of the created tasks. */

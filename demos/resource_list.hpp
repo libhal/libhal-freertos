@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC
+// Copyright 2024 - 2025 Khalil Estell and the libhal contributors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,19 +14,27 @@
 
 #pragma once
 
+#include <optional>
+
 #include <libhal/functional.hpp>
+#include <libhal/io_waiter.hpp>
 #include <libhal/output_pin.hpp>
 #include <libhal/steady_clock.hpp>
+#include <libhal/stream_dac.hpp>
 
-struct hardware_map
+#include <span>
+
+struct resource_list
 {
-  hal::output_pin* led;
-  hal::steady_clock* clock;
+  std::optional<hal::output_pin*> led;
+  std::optional<hal::steady_clock*> clock;
+  std::optional<hal::stream_dac_u8*> dac;
   hal::callback<void()> reset;
+  std::span<std::uint8_t> pcm8_buffer1;
+  std::span<std::uint8_t> pcm8_buffer2;
 };
 
 // Application function must be implemented by one of the compilation units
 // (.cpp) files.
-hal::status application(hardware_map& p_map);
-hal::status initialize_processor();
-hal::result<hardware_map> initialize_platform();
+void application(resource_list& p_map);
+void initialize_platform(resource_list& p_resources);
