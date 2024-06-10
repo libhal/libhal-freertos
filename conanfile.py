@@ -86,7 +86,7 @@ class libhal_freertos(ConanFile):
               "multithreading", "multi-tasking")
     settings = "os", "arch", 'compiler', 'build_type'
     generators = "CMakeDeps", "CMakeToolchain", "VirtualBuildEnv"
-    exports_sources = "CMakeLists.txt"
+    exports_sources = "CMakeLists.txt", "src", "include"
     short_paths = True
     build_policy = "missing"
     options = {
@@ -307,5 +307,5 @@ class libhal_freertos(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = ["freertos_kernel", "freertos_kernel_port"]
+        self.cpp_info.libs = ["libhal-freertos"]
         self.cpp_info.set_property("cmake_target_name", "libhal::freertos")

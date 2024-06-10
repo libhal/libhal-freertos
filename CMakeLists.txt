@@ -18,6 +18,7 @@ project(libhal-freertos VERSION 10.5.1 LANGUAGES C)
 
 add_library(freertos_config INTERFACE)
 target_include_directories(freertos_config SYSTEM INTERFACE include)
+target_sources(freertos_config PRIVATE src/io_waiter.cpp)
 target_compile_definitions(freertos_config PUBLIC INTERFACE projCOVERAGE_TEST=0)
 
 add_subdirectory("third_party")
