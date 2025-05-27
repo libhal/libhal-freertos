@@ -25,7 +25,7 @@ class libhal_freertos_conan(ConanFile):
     topics = ("freertos", "multithreading", "threads", "mcu")
     settings = "compiler", "build_type", "os", "arch"
 
-    python_requires = "libhal-bootstrap/[^4.2.1]"
+    python_requires = "libhal-bootstrap/[>=4.3.0 <5]"
     python_requires_extend = "libhal-bootstrap.library"
 
     options = {
