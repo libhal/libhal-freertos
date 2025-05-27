@@ -16,8 +16,8 @@ public:
 
   static_task(char const* p_name,
               task_function p_task_function,
+              std::uint8_t p_priority,
               hal::buffer_param auto p_stack_size,
-              std::uint8_t p_priority = 1,
               std::size_t p_minimum_stack_size = 64)
     : static_task(p_name,
                   p_task_function,
@@ -29,8 +29,8 @@ public:
 
   static_task(char const* p_name,
               task_function p_task_function,
+              std::uint8_t p_priority,
               std::span<hal::byte> p_stack_buffer,
-              std::uint8_t p_priority = 1,
               std::size_t p_minimum_stack_size = 64);
 
   ~static_task();

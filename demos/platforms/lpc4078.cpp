@@ -69,7 +69,7 @@ hal::cortex_m::dwt_counter* global_steady_clock = nullptr;
 
 extern "C"
 {
-  void vPortSetupTimerInterrupt(void)
+  void vPortSetupTimerInterrupt(void)  // NOLINT(readability-identifier-naming)
   {
     auto cpu_frequency = hal::lpc40::get_frequency(hal::lpc40::peripheral::cpu);
     static hal::cortex_m::systick_timer systick(cpu_frequency);

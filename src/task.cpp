@@ -16,8 +16,8 @@ constexpr std::uint8_t tls_index = 0;
 
 static_task::static_task(char const* p_name,
                          task_function p_task_function,
-                         std::span<hal::byte> p_stack_buffer,
                          std::uint8_t p_priority,
+                         std::span<hal::byte> p_stack_buffer,
                          std::size_t p_minimum_stack_size)
 {
   // Setup TLS Section

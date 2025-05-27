@@ -33,6 +33,8 @@ int main()
   return 0;
 }
 
+// NOLINTBEGIN(bugprone-reserved-identifier)
+// NOLINTBEGIN(readability-identifier-naming)
 extern "C"
 {
   // This gets rid of an issue with libhal-exceptions in Debug mode.
@@ -97,3 +99,5 @@ extern "C"
     *pulTimerTaskStackSize = 1000;
   }
 }
+// NOLINTEND(readability-identifier-naming)
+// NOLINTEND(bugprone-reserved-identifier)

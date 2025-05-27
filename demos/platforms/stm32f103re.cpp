@@ -67,7 +67,7 @@ hal::cortex_m::dwt_counter* global_steady_clock = nullptr;
 
 extern "C"
 {
-  void vPortSetupTimerInterrupt(void)
+  void vPortSetupTimerInterrupt(void)  // NOLINT(readability-identifier-naming)
   {
     auto cpu_frequency = hal::stm32f1::frequency(hal::stm32f1::peripheral::cpu);
     static hal::cortex_m::systick_timer systick(cpu_frequency);
@@ -101,9 +101,7 @@ extern "C"
 class stream_dac : public hal::stream_dac<std::uint8_t>
 {
 public:
-  stream_dac()
-  {
-  }
+  stream_dac() = default;
 
 private:
   void driver_write(samples const&) override

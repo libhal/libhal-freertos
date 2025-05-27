@@ -32,7 +32,7 @@
 using sample_t = hal::stream_dac_u8::samples;
 
 resource_list hardware_map;
-QueueHandle_t sample_queue = NULL;
+QueueHandle_t sample_queue = nullptr;
 unsigned int audio_streamer_percent = 0;
 unsigned int audio_decoder_percent = 0;
 
@@ -56,9 +56,10 @@ std::span<std::uint8_t> pcm16_to_pcm8(std::span<std::int16_t> p_input,
   auto const min_transfer = std::min(p_input.size(), p_output.size());
 
   for (size_t j = 0; j < min_transfer; j++) {
-    constexpr std::uint16_t positive_offset = (UINT16_MAX / 2) + 1;
-    auto const unsigned_value = static_cast<std::uint16_t>(p_input[j]);
-    std::int16_t const unsigned_pcm16_value = unsigned_value + positive_offset;
+    constexpr hal::u16 positive_offset = (UINT16_MAX / 2) + 1;
+    auto const unsigned_value = static_cast<hal::u16>(p_input[j]);
+    auto const unsigned_pcm16_value =
+      static_cast<hal::i16>(unsigned_value + positive_offset);
     p_output[j] = static_cast<std::uint8_t>(unsigned_pcm16_value >> 8);
   }
 
@@ -84,8 +85,12 @@ void audio_decoder(void*) noexcept
       ulTaskGetRunTimePercent(xTaskGetCurrentTaskHandle());
     mp3dec_frame_info_t info{};
 
-    std::size_t sample_count = mp3dec_decode_frame(
-      &mp3d, mp3_data.data(), mp3_data.size(), pcm16.data(), &info);
+    std::size_t sample_count =
+      mp3dec_decode_frame(&mp3d,
+                          mp3_data.data(),
+                          static_cast<int>(mp3_data.size()),
+                          pcm16.data(),
+                          &info);
 
     mp3_data = mp3_data.subspan(info.frame_bytes);
 
@@ -133,10 +138,10 @@ void application(resource_list& p_map)
     queue_size, sizeof(sample_t), queue_storage_area.data(), &static_queue);
 
   static hal::freertos::static_task audio_streamer_task(
-    "stream", audio_streamer, hal::buffer<128 * sizeof(StackType_t)>);
+    "stream", audio_streamer, hal::buffer<128ULL * sizeof(StackType_t)>);
 
   static hal::freertos::static_task audio_decoder_task(
-    "decoder", audio_decoder, hal::buffer<6000 * sizeof(StackType_t)>);
+    "decoder", audio_decoder, hal::buffer<6000ULL * sizeof(StackType_t)>);
 
   vTaskStartScheduler();
 
