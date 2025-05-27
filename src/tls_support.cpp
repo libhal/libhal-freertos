@@ -9,6 +9,7 @@ extern "C"
   std::array<std::uint8_t, 128> corruptible_data{};
   void* global_control;
 
+  // NOLINTNEXTLINE(readability-identifier-naming,bugprone-reserved-identifier)
   void* __emutls_get_address(__emutls_object* p_control)
   {
     // auto* tls_memory = reinterpret_cast<StackType_t*>(

@@ -19,21 +19,20 @@
 #include <libhal-freertos/task.hpp>
 
 constexpr size_t stack_size = 500;
+
+// NOLINTBEGIN(bugprone-reserved-identifier)
+// NOLINTBEGIN(readability-identifier-naming)
 /* Structure that will hold the TCB of the task being created. */
 StaticTask_t xTaskBuffer;
 
 /* Buffer that the task being created will use as its stack.  Note this is
 an array of StackType_t variables.  The size of StackType_t is dependent on
 the RTOS port. */
-StackType_t xStack[stack_size];
+StackType_t xStack[stack_size];  // NOLINT(modernize-avoid-c-arrays)
 
 /* Function that implements the task being created. */
-void vTaskCode(void* pvParameters)
+void vTaskCode(void*)
 {
-  /* The parameter value is expected to be 1 as 1 is passed in the
-  pvParameters value in the call to xTaskCreateStatic(). */
-  configASSERT((uint32_t)pvParameters == 1UL);
-
   for (;;) {
     /* Task code goes here. */
   }
@@ -130,3 +129,5 @@ extern "C"
     }
   }
 }
+// NOLINTEND(readability-identifier-naming)
+// NOLINTEND(bugprone-reserved-identifier)

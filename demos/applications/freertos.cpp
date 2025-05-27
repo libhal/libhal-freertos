@@ -34,9 +34,9 @@ void blinker(void* p_hardware_map) noexcept
   }
 }
 
-TaskHandle_t xHandle = NULL;
+TaskHandle_t x_handle = nullptr;
 /* Structure that will hold the TCB of the task being created. */
-StaticTask_t xTaskBuffer;
+StaticTask_t x_task_buffer;
 
 void application(resource_list& p_map)
 {
@@ -44,14 +44,14 @@ void application(resource_list& p_map)
   using namespace hal::literals;
 
   /* Create the task without using any dynamic memory allocation. */
-  xHandle = xTaskCreateStatic(
-    blinker,       /* Function that implements the task. */
-    "blinker",     /* Text name for the task. */
-    stack.size(),  /* Number of indexes in the xStack array. */
-    &p_map,        /* Parameter passed into the task. */
-    4,             /* Priority at which the task is created. */
-    stack.data(),  /* Array to use as the task's stack. */
-    &xTaskBuffer); /* Variable to hold the task's data structure. */
+  x_handle = xTaskCreateStatic(
+    blinker,         /* Function that implements the task. */
+    "blinker",       /* Text name for the task. */
+    stack.size(),    /* Number of indexes in the xStack array. */
+    &p_map,          /* Parameter passed into the task. */
+    4,               /* Priority at which the task is created. */
+    stack.data(),    /* Array to use as the task's stack. */
+    &x_task_buffer); /* Variable to hold the task's data structure. */
 
   /* Start the RTOS scheduler, this function should not return as it causes the
   execution context to change from main() to one of the created tasks. */
