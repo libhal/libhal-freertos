@@ -4,8 +4,73 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy_10.6.0:
-    uses: ./.github/workflows/deploy-version.yml
+  cortex-m0:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
     with:
-      version: 10.6.0
+      library: libhal-freertos
+      repo: ${{ github.repository }}
+      version: ${{ github.ref_name }}
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m0
+      os: baremetal
+      conan_version: 2.16.1
+      external_package: true
+    secrets: inherit
+  cortex-m0plus:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      library: libhal-freertos
+      repo: ${{ github.repository }}
+      version: ${{ github.ref_name }}
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m0plus
+      os: baremetal
+      conan_version: 2.16.1
+      external_package: true
+    secrets: inherit
+  cortex-m3:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      library: libhal-freertos
+      repo: ${{ github.repository }}
+      version: ${{ github.ref_name }}
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m3
+      os: baremetal
+      conan_version: 2.16.1
+      external_package: true
+    secrets: inherit
+  cortex-m4:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      library: libhal-freertos
+      repo: ${{ github.repository }}
+      version: ${{ github.ref_name }}
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m4
+      os: baremetal
+      conan_version: 2.16.1
+      external_package: true
+    secrets: inherit
+  cortex-m4f:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      library: libhal-freertos
+      repo: ${{ github.repository }}
+      version: ${{ github.ref_name }}
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m4f
+      os: baremetal
+      conan_version: 2.16.1
+      external_package: true
     secrets: inherit
