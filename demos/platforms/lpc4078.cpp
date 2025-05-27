@@ -71,17 +71,15 @@ extern "C"
 {
   void vPortSetupTimerInterrupt(void)
   {
-    hal::lpc40::initialize_interrupts();
-
-    hal::cortex_m::enable_interrupt(hal::cortex_m::irq::software_call,
-                                    vPortSVCHandler);
-    hal::cortex_m::enable_interrupt(hal::cortex_m::irq::pend_sv,
-                                    xPortPendSVHandler);
-
     auto cpu_frequency = hal::lpc40::get_frequency(hal::lpc40::peripheral::cpu);
     static hal::cortex_m::systick_timer systick(cpu_frequency);
     try {
       systick.schedule(xPortSysTickHandler, 1ms);
+      // Override the handler set by systick to ensure its set correctly.
+      // systick schedule may wrap the function call which is problematic.
+      // But now its set to the correct period of 1ms
+      hal::cortex_m::enable_interrupt(hal::cortex_m::irq::systick,
+                                      xPortSysTickHandler);
     } catch (...) {
       hal::halt();
     }
@@ -91,6 +89,7 @@ extern "C"
   {
     return global_steady_clock->uptime();
   }
+
   void _freertos_configure_high_resolution_timer(void)
   {
   }
@@ -109,27 +108,32 @@ extern "C"
 std::array<std::uint8_t, 6000> buffer1;
 std::array<std::uint8_t, 6000> buffer2;
 
-resource_list initialize_platform()
+void initialize_platform(resource_list p_map)
 {
   // Change the input frequency to match the frequency of the crystal attached
   // to the external OSC pins.
   hal::lpc40::maximum(10.0_MHz);
 
+  hal::lpc40::initialize_interrupts();
+  p_map.reset = []() { hal::cortex_m::reset(); };
+  p_map.pcm8_buffer1 = buffer1;
+  p_map.pcm8_buffer2 = buffer2;
+
   auto cpu_frequency = hal::lpc40::get_frequency(hal::lpc40::peripheral::cpu);
 
   static hal::cortex_m::dwt_counter steady_clock(cpu_frequency);
+  p_map.clock = &steady_clock;
   static hal::lpc40::output_pin led(1, 10);
+
+  p_map.led = &led;
   static hal::freertos::io_waiter waiter;
   static hal::lpc40::stream_dac_u8 my_dac(waiter);
+  p_map.dac = &my_dac;
 
   global_steady_clock = &steady_clock;
 
-  return {
-    .led = &led,
-    .clock = &steady_clock,
-    .dac = &my_dac,
-    .reset = []() { hal::cortex_m::reset(); },
-    .pcm8_buffer1 = buffer1,
-    .pcm8_buffer2 = buffer2,
-  };
+  hal::cortex_m::enable_interrupt(hal::cortex_m::irq::software_call,
+                                  vPortSVCHandler);
+  hal::cortex_m::enable_interrupt(hal::cortex_m::irq::pend_sv,
+                                  xPortPendSVHandler);
 }

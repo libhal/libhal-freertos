@@ -43,7 +43,7 @@ void audio_streamer(void*) noexcept
       ulTaskGetRunTimePercent(xTaskGetCurrentTaskHandle());
     sample_t current_samples{};
     xQueueReceive(sample_queue, &current_samples, portMAX_DELAY);
-    hardware_map.dac->write(current_samples);
+    (*hardware_map.dac)->write(current_samples);
   }
 }
 
@@ -53,12 +53,12 @@ mp3dec_t mp3d;
 std::span<std::uint8_t> pcm16_to_pcm8(std::span<std::int16_t> p_input,
                                       std::span<std::uint8_t> p_output)
 {
-  const auto min_transfer = std::min(p_input.size(), p_output.size());
+  auto const min_transfer = std::min(p_input.size(), p_output.size());
 
   for (size_t j = 0; j < min_transfer; j++) {
     constexpr std::uint16_t positive_offset = (UINT16_MAX / 2) + 1;
-    const auto unsigned_value = static_cast<std::uint16_t>(p_input[j]);
-    const std::int16_t unsigned_pcm16_value = unsigned_value + positive_offset;
+    auto const unsigned_value = static_cast<std::uint16_t>(p_input[j]);
+    std::int16_t const unsigned_pcm16_value = unsigned_value + positive_offset;
     p_output[j] = static_cast<std::uint8_t>(unsigned_pcm16_value >> 8);
   }
 
@@ -68,7 +68,7 @@ std::span<std::uint8_t> pcm16_to_pcm8(std::span<std::int16_t> p_input,
 void audio_decoder(void*) noexcept
 {
   mp3dec_init(&mp3d);
-  std::span<const hal::byte> mp3_data(
+  std::span<hal::byte const> mp3_data(
     infraction_bam_bam_royalty_free_16kHz_mono_mp3);
   size_t buffer_index = 0;
   std::array pcm8_array{
@@ -111,7 +111,7 @@ void audio_decoder(void*) noexcept
           pcm16_to_pcm8({ pcm16.data(), sample_count - span_size }, pcm8_span);
       }
 
-      hardware_map.led->level(!hardware_map.led->level());
+      (*hardware_map.led)->level(!(*hardware_map.led)->level());
       xQueueSend(sample_queue, &finished_samples, portMAX_DELAY);
     }
   }

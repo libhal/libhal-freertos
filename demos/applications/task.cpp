@@ -41,10 +41,10 @@ void application(resource_list& p_map)
     [](void*) noexcept {
       while (true) {
         a++;
-        map.led->level(true);
+        (*map.led)->level(true);
         vTaskDelay(500);
         b++;
-        map.led->level(false);
+        (*map.led)->level(false);
         vTaskDelay(500);
       }
     },

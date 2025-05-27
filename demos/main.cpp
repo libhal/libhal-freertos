@@ -19,11 +19,13 @@
 
 #include "resource_list.hpp"
 
+resource_list resources;
+
 int main()
 {
   try {
-    auto hardware_map = initialize_platform();
-    application(hardware_map);
+    initialize_platform(resources);
+    application(resources);
   } catch (...) {
     hal::halt();
   }

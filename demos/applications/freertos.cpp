@@ -22,14 +22,14 @@
 
 std::array<StackType_t, 64> stack;
 
-void blinker(void* p_hardware_map)
+void blinker(void* p_hardware_map) noexcept
 {
   auto& hardware = *reinterpret_cast<resource_list*>(p_hardware_map);
 
   while (true) {
-    (void)hardware.led->level(true);
+    (*hardware.led)->level(true);
     vTaskDelay(500);
-    (void)hardware.led->level(false);
+    (*hardware.led)->level(false);
     vTaskDelay(500);
   }
 }

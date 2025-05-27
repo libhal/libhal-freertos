@@ -19,8 +19,13 @@ project(demos LANGUAGES CXX)
 libhal_build_demos(
     DEMOS
     freertos
-    music_player
     task
+
+    # ==========================================================================
+    # [NOTE]: Uncomment applications below. Will not work if RAM or ROM size
+    #         isn't big enough.
+    # ==========================================================================
+    # music_player
 
     PACKAGES
     libhal-freertos
