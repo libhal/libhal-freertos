@@ -24,12 +24,70 @@ on:
     - cron: "0 12 * * 0"
 
 jobs:
-  ci:
-    uses: libhal/ci/.github/workflows/library_check.yml@5.x.y
+  lint:
+    uses: libhal/ci/.github/workflows/lint.yml@5.x.y
+    with:
+      library: ${{ github.event.repository.name }}
+      source_dir: "src/"
+      repo: ${{ github.repository }}
     secrets: inherit
 
-  deploy_all_check:
-    uses: libhal/ci/.github/workflows/deploy_all.yml@5.x.y
+  docs:
+    uses: libhal/ci/.github/workflows/docs.yml@5.x.y
+    with:
+      library: ${{ github.event.repository.name }}
+      source_dir: "src/"
+      repo: ${{ github.repository }}
+    secrets: inherit
+
+  cortex-m0:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m0
+      os: baremetal
+    secrets: inherit
+
+  cortex-m0plus:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m0plus
+      os: baremetal
+    secrets: inherit
+
+  cortex-m3:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m3
+      os: baremetal
+    secrets: inherit
+
+  cortex-m4:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m4
+      os: baremetal
+    secrets: inherit
+
+  cortex-m4f:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
+    with:
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+      arch: cortex-m4f
+      os: baremetal
     secrets: inherit
 
   demo_check_lpc4074:
