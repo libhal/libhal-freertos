@@ -108,7 +108,7 @@ extern "C"
 std::array<std::uint8_t, 6000> buffer1;
 std::array<std::uint8_t, 6000> buffer2;
 
-void initialize_platform(resource_list p_map)
+void initialize_platform(resource_list& p_map)
 {
   // Change the input frequency to match the frequency of the crystal attached
   // to the external OSC pins.
