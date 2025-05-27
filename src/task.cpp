@@ -14,15 +14,15 @@
 namespace hal::freertos {
 constexpr std::uint8_t tls_index = 0;
 
-static_task::static_task(const char* p_name,
+static_task::static_task(char const* p_name,
                          task_function p_task_function,
                          std::span<hal::byte> p_stack_buffer,
                          std::uint8_t p_priority,
                          std::size_t p_minimum_stack_size)
 {
   // Setup TLS Section
-  const auto tls_size = reinterpret_cast<std::uintptr_t>(&__tls_size);
-  const auto tls_data_size = reinterpret_cast<std::uintptr_t>(&__tdata_size);
+  auto const tls_size = reinterpret_cast<std::uintptr_t>(&__tls_size);
+  auto const tls_data_size = reinterpret_cast<std::uintptr_t>(&__tdata_size);
 
   // If the tls_size is greater than or equal to the
   if (tls_size >= p_stack_buffer.size() + p_minimum_stack_size) {

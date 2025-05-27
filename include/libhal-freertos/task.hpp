@@ -14,7 +14,7 @@ class static_task
 public:
   using task_function = void(void*) noexcept;
 
-  static_task(const char* p_name,
+  static_task(char const* p_name,
               task_function p_task_function,
               hal::buffer_param auto p_stack_size,
               std::uint8_t p_priority = 1,
@@ -27,7 +27,7 @@ public:
   {
   }
 
-  static_task(const char* p_name,
+  static_task(char const* p_name,
               task_function p_task_function,
               std::span<hal::byte> p_stack_buffer,
               std::uint8_t p_priority = 1,

@@ -1,0 +1,11 @@
+name: 🚀 Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_10.6.0:
+    uses: ./.github/workflows/deploy_version.yml
+    with:
+      version: 10.6.0
+    secrets: inherit
