@@ -48,6 +48,7 @@ void application(resource_list& p_map)
         vTaskDelay(500);
       }
     },
+    1,
     task1_stack);
 
   static std::array<hal::byte, 512> task2_stack;
@@ -62,6 +63,7 @@ void application(resource_list& p_map)
         global++;
       }
     },
+    1,
     task2_stack);
 
   /* Start the RTOS scheduler, this function should not return as it causes the
