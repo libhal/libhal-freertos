@@ -7,8 +7,18 @@
 
 FreeRTOS utilities for developers using libhal.
 
-> [!WARNING]
-> TLS (thread local storage) is not currently supported.
+> [!INFO]
+> The versions of this project are not associated with FreeRTOS. This package
+> will aim to support the latest version of FreeRTOS that is provided by the
+> `libhal/freertos` package.
+>
+> If we determine that there is demand for specific version of FreeRTOS and not
+> just the latest, then we may consider a change in version control. What that
+> looks like is not well defined currently.
+
+## TLS (thread local storage) Support
+
+TLS is not currently supported.
 
 ## Contributing
 
