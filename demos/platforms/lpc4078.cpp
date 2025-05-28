@@ -15,18 +15,18 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
+#include <libhal-arm-mcu/lpc40/clock.hpp>
+#include <libhal-arm-mcu/lpc40/constants.hpp>
+#include <libhal-arm-mcu/lpc40/interrupt.hpp>
+#include <libhal-arm-mcu/lpc40/output_pin.hpp>
+#include <libhal-arm-mcu/lpc40/power.hpp>
+#include <libhal-arm-mcu/lpc40/stream_dac.hpp>
 #include <libhal-armcortex/dwt_counter.hpp>
 #include <libhal-armcortex/interrupt.hpp>
 #include <libhal-armcortex/startup.hpp>
 #include <libhal-armcortex/system_control.hpp>
 #include <libhal-armcortex/systick_timer.hpp>
 #include <libhal-freertos/io_waiter.hpp>
-#include <libhal-lpc40/clock.hpp>
-#include <libhal-lpc40/constants.hpp>
-#include <libhal-lpc40/interrupt.hpp>
-#include <libhal-lpc40/output_pin.hpp>
-#include <libhal-lpc40/power.hpp>
-#include <libhal-lpc40/stream_dac.hpp>
 #include <libhal-util/enum.hpp>
 #include <libhal-util/static_callable.hpp>
 #include <libhal-util/steady_clock.hpp>
