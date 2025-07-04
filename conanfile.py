@@ -49,3 +49,6 @@ class libhal_freertos_conan(ConanFile):
     def package_info(self):
         self.cpp_info.libs = ["libhal-freertos"]
         self.cpp_info.set_property("cmake_target_name", "libhal::freertos")
+
+    def package_id(self):
+        self.info.python_requires.major_mode()
